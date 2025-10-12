@@ -310,7 +310,7 @@ type AddTaskFormProps = {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   onCancel: () => void;
   onChange: <K extends keyof TaskDraft>(key: K, value: TaskDraft[K]) => void;
-  titleRef: RefObject<HTMLInputElement>;
+  titleRef: RefObject<HTMLInputElement | null>;
   statusLabel: string;
 };
 
