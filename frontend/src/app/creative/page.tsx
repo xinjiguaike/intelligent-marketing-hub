@@ -1,5 +1,4 @@
 import { CreativeWorkspace } from "@/components/creative/creative-workspace";
-import { JourneyMap } from "@/components/creative/journey-map";
 
 export default function CreativePage() {
   return (
@@ -11,7 +10,6 @@ export default function CreativePage() {
         </p>
       </section>
       <CreativeWorkspace />
-      <JourneyMap />
     </div>
   );
 }
