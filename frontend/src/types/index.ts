@@ -27,6 +27,65 @@ export type Insight = {
   time: string;
 };
 
+export type InsightHighlight = {
+  id: string;
+  title: string;
+  metric: string;
+  change: number;
+  trend: "up" | "down" | "stable";
+  description: string;
+  owner: string;
+  impact: Insight["impact"];
+};
+
+export type ChannelInsight = {
+  id: string;
+  channel: string;
+  reach: string;
+  engagement: string;
+  conversion: string;
+  trend: "up" | "down" | "stable";
+  narrative: string;
+};
+
+export type AudienceSignal = {
+  id: string;
+  segment: string;
+  lift: number;
+  timeWindow: string;
+  signal: string;
+  confidence: number;
+};
+
+export type InsightAction = {
+  id: string;
+  title: string;
+  owner: string;
+  dueAt: string;
+  status: "pending" | "in-progress" | "done";
+  aiSupport: string;
+  impact: "high" | "medium" | "low";
+};
+
+export type CollaborationThread = {
+  id: string;
+  topic: string;
+  participants: string[];
+  updatedAt: string;
+  status: "同步中" | "待决策" | "已归档";
+  summary: string;
+  nextStep: string;
+};
+
+export type CollaborationActivity = {
+  id: string;
+  type: "ai" | "team" | "experiment";
+  title: string;
+  timestamp: string;
+  detail: string;
+  owner: string;
+};
+
 export type DashboardKpi = {
   id: string;
   label: string;
