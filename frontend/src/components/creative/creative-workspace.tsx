@@ -37,18 +37,30 @@ type CanvasMap = typeof creativeCanvasMap;
 type CopyCanvas = CanvasMap["图文智创"];
 type PosterCanvas = CanvasMap["海报智绘"];
 type StoryboardCanvas = CanvasMap["视频智创"];
-type CopySection = CopyCanvas["sections"][number];
+type CopySection = {
+  id: string;
+  title: string;
+  content: string;
+};
+type CopyRefineMap = NonNullable<CopyCanvas["ai"]>["refine"];
+type CopyRefineConfig = CopyRefineMap[keyof CopyRefineMap];
+type StoryboardScene = {
+  id: string;
+  title: string;
+  visual: string;
+  dialogue: string;
+};
 type PosterState = {
-  concept: PosterCanvas["concept"];
-  tagline: PosterCanvas["tagline"];
-  palette: PosterCanvas["palette"];
-  focalPoints: PosterCanvas["focalPoints"];
-  layoutNotes: PosterCanvas["layoutNotes"];
+  concept: string;
+  tagline: string;
+  palette: PosterCanvas["palette"][number][];
+  focalPoints: string[];
+  layoutNotes: string[];
 };
 type StoryboardState = {
-  duration: StoryboardCanvas["duration"];
-  scenes: StoryboardCanvas["scenes"];
-  outro: StoryboardCanvas["outro"];
+  duration: string;
+  scenes: StoryboardScene[];
+  outro: string;
 };
 
 const tabIconMap = {
@@ -135,19 +147,31 @@ const creationGuides = {
 } as const;
 
 export function CreativeWorkspace() {
+  type DeliverableStatus = keyof typeof deliverableStatusMap;
+  type Deliverable = Omit<
+    (typeof creativeTaskSummary.deliverables)[number],
+    "status"
+  > & {
+    status: DeliverableStatus;
+  };
+  type WorkflowTaskStatus = "pending" | "synced";
+  type WorkflowTask = (typeof creativeWorkflowPush)[number] & {
+    status: WorkflowTaskStatus;
+  };
+
   const [activeTab, setActiveTab] = useState<(typeof creativeTabs)[number]>(
     creativeTabs[0]
   );
   const [isCollabOpen, setCollabOpen] = useState(false);
-  const [deliverables, setDeliverables] = useState(() =>
+  const [deliverables, setDeliverables] = useState<Deliverable[]>(() =>
     creativeTaskSummary.deliverables.map((item) => ({ ...item }))
   );
   const [workflowSyncState, setWorkflowSyncState] = useState<
     "idle" | "syncing" | "done"
   >("idle");
   const [workflowNotice, setWorkflowNotice] = useState<string | null>(null);
-  const [workflowTasks, setWorkflowTasks] = useState(() =>
-    creativeWorkflowPush.map((task) => ({ ...task, status: "pending" as const }))
+  const [workflowTasks, setWorkflowTasks] = useState<WorkflowTask[]>(() =>
+    creativeWorkflowPush.map((task) => ({ ...task, status: "pending" }))
   );
   const syncTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -198,26 +222,8 @@ export function CreativeWorkspace() {
       ? initialCanvas.sections.map((section) => ({ ...section }))
       : []
   );
-  const [posterData, setPosterData] = useState<PosterState | null>(
-    initialCanvas.type === "poster"
-      ? {
-          concept: initialCanvas.concept,
-          tagline: initialCanvas.tagline,
-          palette: initialCanvas.palette.map((item) => ({ ...item })),
-          focalPoints: [...initialCanvas.focalPoints],
-          layoutNotes: [...initialCanvas.layoutNotes],
-        }
-      : null
-  );
-  const [storyboardData, setStoryboardData] = useState<StoryboardState | null>(
-    initialCanvas.type === "storyboard"
-      ? {
-          duration: initialCanvas.duration,
-          scenes: initialCanvas.scenes.map((scene) => ({ ...scene })),
-          outro: initialCanvas.outro,
-        }
-      : null
-  );
+  const [posterData, setPosterData] = useState<PosterState | null>(null);
+  const [storyboardData, setStoryboardData] = useState<StoryboardState | null>(null);
 
   const [isAiStreaming, setIsAiStreaming] = useState(false);
   const [aiStreamBuffer, setAiStreamBuffer] = useState("");
@@ -386,10 +392,8 @@ export function CreativeWorkspace() {
       return;
     }
 
-    const refineConfig =
-      canvas.ai?.refine?.[sectionId] as NonNullable<
-        CopyCanvas["ai"]
-      >["refine"][string] | undefined;
+    const refineMap = canvas.ai?.refine as Record<string, CopyRefineConfig> | undefined;
+    const refineConfig = refineMap?.[sectionId];
 
     if (!refineConfig) {
       return;
@@ -442,6 +446,10 @@ export function CreativeWorkspace() {
       : canvas.type === "poster"
       ? creationGuides.poster
       : creationGuides.storyboard;
+  const copyRefineMap: Record<string, CopyRefineConfig> | undefined =
+    canvas.type === "copy" && canvas.ai?.refine
+      ? (canvas.ai.refine as Record<string, CopyRefineConfig>)
+      : undefined;
   const aiContinuationAvailable = Boolean(canvas.ai?.continuation);
   const aiContinueDisabled =
     !aiContinuationAvailable || isAiStreaming || sectionStreamingId !== null;
@@ -451,9 +459,9 @@ export function CreativeWorkspace() {
       ? {
           concept: canvas.concept,
           tagline: canvas.tagline,
-          palette: canvas.palette,
-          focalPoints: canvas.focalPoints,
-          layoutNotes: canvas.layoutNotes,
+          palette: canvas.palette.map((item) => ({ ...item })),
+          focalPoints: [...canvas.focalPoints],
+          layoutNotes: [...canvas.layoutNotes],
         }
       : null;
 
@@ -461,7 +469,7 @@ export function CreativeWorkspace() {
     canvas.type === "storyboard"
       ? {
           duration: canvas.duration,
-          scenes: canvas.scenes,
+          scenes: canvas.scenes.map((scene) => ({ ...scene })),
           outro: canvas.outro,
         }
       : null;
@@ -770,7 +778,7 @@ export function CreativeWorkspace() {
                   >
                     <div className="flex items-center justify-between">
                       <h3 className="text-sm font-semibold text-white">{section.title}</h3>
-                      {canvas.ai?.refine?.[section.id] && (
+                      {copyRefineMap?.[section.id] && (
                         <button
                           type="button"
                           onClick={() => handleSectionRefine(section.id)}

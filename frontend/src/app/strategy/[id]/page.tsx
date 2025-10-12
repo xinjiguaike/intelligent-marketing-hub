@@ -8,8 +8,17 @@ type StrategyDetailPageProps = {
   params: { id: string };
 };
 
-export default function StrategyDetailPage({ params }: StrategyDetailPageProps) {
-  const plan = campaignPlans.find((item) => item.id === params.id);
+export function generateStaticParams() {
+  return campaignPlans.map((item) => ({ id: item.id }));
+}
+
+export default async function StrategyDetailPage({
+  params,
+}: {
+  params: Promise<StrategyDetailPageProps["params"]>;
+}) {
+  const { id } = await params;
+  const plan = campaignPlans.find((item) => item.id === id);
   if (!plan) {
     notFound();
   }

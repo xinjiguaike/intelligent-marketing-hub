@@ -4,13 +4,7 @@ import {
   productBundles,
   productResources,
 } from "@/data/mock/brand-resources";
-import {
-  ChartPie,
-  Package,
-  Palmtree,
-  Sparkles,
-  Tags,
-} from "lucide-react";
+import { ChartPie, Package, Sparkles, Tags } from "lucide-react";
 import { ReactNode, useState } from "react";
 
 const statusTone: Record<string, string> = {

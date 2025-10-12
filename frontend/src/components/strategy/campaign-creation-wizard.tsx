@@ -43,7 +43,9 @@ const wizardSteps = [
 type WizardStep = (typeof wizardSteps)[number];
 
 type ChecklistState = Array<
-  StrategyBriefChecklistItem & { status: "done" | "pending" | "flagged" }
+  Omit<StrategyBriefChecklistItem, "status"> & {
+    status: "done" | "pending" | "flagged";
+  }
 >;
 
 type ConfirmationState = Array<
@@ -57,6 +59,9 @@ type SuggestionState = Array<
     status: "pending" | "accepted" | "review";
   }
 >;
+type HandoffTask = (typeof strategyHandoffSummary.newTasks)[number] & {
+  status: "pending" | "synced";
+};
 
 const statusStyleMap = {
   done: {
@@ -178,10 +183,10 @@ export function CampaignCreationWizard() {
   const [handoffDeliverables, setHandoffDeliverables] = useState(() =>
     strategyHandoffSummary.deliverables.map((item) => ({ ...item }))
   );
-  const [handoffNewTasks, setHandoffNewTasks] = useState(() =>
+  const [handoffNewTasks, setHandoffNewTasks] = useState<HandoffTask[]>(() =>
     strategyHandoffSummary.newTasks.map((task) => ({
       ...task,
-      status: "pending" as const,
+      status: "pending",
     }))
   );
   const [handoffSyncState, setHandoffSyncState] = useState<"idle" | "syncing" | "done">(

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import {
   BrainCircuit,
   ChartSpline,
@@ -152,7 +152,9 @@ export function AppShell({ children }: AppShellProps) {
         </div>
       </aside>
       <div className="relative flex min-h-screen flex-1 flex-col">
-        <TopBar />
+        <Suspense fallback={<div className="h-16 border-b border-white/5" />}>
+          <TopBar />
+        </Suspense>
         <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 pb-14 pt-6 sm:px-6 lg:px-8">
           {children}
         </main>

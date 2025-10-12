@@ -302,10 +302,13 @@ function AddAgentForm({ onSubmit }: AddAgentFormProps) {
   });
 
   function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const { name, value, type, checked } = event.target;
+    const { name, value, type } = event.target;
+    const parsedValue =
+      type === "checkbox" ? (event.target as HTMLInputElement).checked : value;
+
     setForm((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: parsedValue,
     }));
   }
 
@@ -315,7 +318,6 @@ function AddAgentForm({ onSubmit }: AddAgentFormProps) {
       return;
     }
 
-    const now = new Date();
     const skillList = form.skills
       .split(",")
       .map((item) => item.trim())

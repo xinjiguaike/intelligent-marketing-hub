@@ -17,8 +17,17 @@ type ExecutionPageProps = {
   params: { id: string };
 };
 
-export default function ExecutionPage({ params }: ExecutionPageProps) {
-  const flow = executionFlows.find((item) => item.id === params.id);
+export function generateStaticParams() {
+  return executionFlows.map((item) => ({ id: item.id }));
+}
+
+export default async function ExecutionPage({
+  params,
+}: {
+  params: Promise<ExecutionPageProps["params"]>;
+}) {
+  const { id } = await params;
+  const flow = executionFlows.find((item) => item.id === id);
   if (!flow) {
     notFound();
   }

@@ -168,7 +168,7 @@ export type AuthorizationRequest = {
 export type AdvocateAccount = {
   id: string;
   name: string;
-  type: "KOC" | "KOS";
+  type: "KOL" | "KOC" | "KOS";
   vertical: string;
   owner: string;
   status: "执行中" | "待签约" | "暂停合作";
