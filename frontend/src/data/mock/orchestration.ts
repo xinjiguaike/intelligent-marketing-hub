@@ -717,7 +717,7 @@ export const journeyStages: JourneyStage[] = [
     aiTool: "AI 媒介官 ATLAS · 投放排期器",
     humanAction: "校准预算、选择渠道资源、绑定达人档期。",
     deliverable: "投放甘特图 + 渠道执行指令",
-    entryPoint: "运营矩阵中心 → 投放排期甘特 → 一键同步渠道",
+    entryPoint: "运营中心 → 投放排期甘特 → 一键同步渠道",
     next: "回写至任务编排，进入运营监控闭环。",
     executionId: "exec-launch",
   },
@@ -907,7 +907,7 @@ export const executionFlows: ExecutionFlow[] = [
     aiAgent: "AI 媒介官 ATLAS",
     summary:
       "根据素材上线时间与达人档期，生成投放甘特图、预算拆分与渠道执行指令。",
-    entryPath: "运营矩阵中心 → 投放甘特图 → 智能排期",
+    entryPath: "运营中心 → 投放甘特图 → 智能排期",
     prerequisites: ["确认素材上线时间", "锁定渠道预算", "同步达人档期与资源位"],
     streamSegments: [
       "ATLAS 正在读取素材上线计划与预算上限……",

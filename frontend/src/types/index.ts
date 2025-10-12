@@ -133,6 +133,117 @@ export type CollaborationProgress = {
   nextStep: string;
 };
 
+export type PublishingSlot = {
+  id: string;
+  account: string;
+  channel: string;
+  scheduledAt: string;
+  status: "已确认" | "待确认" | "调整建议";
+  focus: string;
+  aiRecommendation?: string;
+};
+
+export type MatrixAccount = {
+  id: string;
+  name: string;
+  platform: string;
+  category: string;
+  owner: string;
+  status: "已授权" | "待授权" | "授权失效";
+  followers: number;
+  engagement: number;
+  lastSync: string;
+  boundAssets: number;
+};
+
+export type AuthorizationRequest = {
+  id: string;
+  accountName: string;
+  platform: string;
+  pendingScope: string[];
+  requestedAt: string;
+  contact: string;
+};
+
+export type AdvocateAccount = {
+  id: string;
+  name: string;
+  type: "KOC" | "KOS";
+  vertical: string;
+  owner: string;
+  status: "执行中" | "待签约" | "暂停合作";
+  activationScore: number;
+  tasksInFlight: number;
+  nextDelivery: string;
+};
+
+export type AdvocateCampaign = {
+  id: string;
+  title: string;
+  type: "种草" | "探店" | "晒单";
+  owner: string;
+  status: "进行中" | "待启动" | "待复盘";
+  dueAt: string;
+};
+
+export type ProductResource = {
+  id: string;
+  name: string;
+  sku: string;
+  category: string;
+  highlight: string;
+  channels: string[];
+  status: "上架" | "调优中" | "下线准备";
+  assetsLinked: number;
+  updatedAt: string;
+};
+
+export type ProductBundle = {
+  id: string;
+  title: string;
+  purpose: string;
+  owner: string;
+  items: number;
+  lastUsedAt: string;
+};
+
+export type AssetLifecycle = {
+  id: string;
+  title: string;
+  owner: string;
+  stage: "待质检" | "执行中" | "已归档";
+  channel: string;
+  nextAction: string;
+  status: "正常" | "异常";
+};
+
+export type OperationsCalendarEvent = {
+  id: string;
+  time: string;
+  title: string;
+  channel: string;
+  type: "发布" | "投放" | "达人" | "资产" | "商品";
+  owner: string;
+  status?: "已确认" | "待定" | "风险";
+};
+
+export type OperationsCalendarDay = {
+  date: string;
+  label: string;
+  focus: string;
+  events: OperationsCalendarEvent[];
+};
+
+export type OperationalHighlight = {
+  id: string;
+  title: string;
+  description: string;
+  tag: string;
+  source: "publishing" | "asset" | "product" | "workflow";
+  actionText: string;
+  actionLink: string;
+};
+
 export type InsightMetric = {
   id: string;
   label: string;

@@ -5,18 +5,19 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
   BrainCircuit,
-  CalendarClock,
   ChartSpline,
   ChevronDown,
   Compass,
   LayoutDashboard,
-  Lightbulb,
   Palette,
+  Bot,
+  Presentation,
+  Radar,
   ServerCog,
   SigmaSquare,
   UserRound,
-  UsersRound,
   Workflow,
+  Boxes,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { personalBoards } from "@/data/mock/orchestration";
@@ -44,7 +45,7 @@ const navItems = [
   {
     label: "营销策划空间",
     href: "/strategy",
-    icon: Compass,
+    icon: Presentation,
   },
   {
     label: "创意工作室",
@@ -52,19 +53,19 @@ const navItems = [
     icon: Palette,
   },
   {
-    label: "素材与内容库",
-    href: "/assets",
-    icon: Lightbulb,
-  },
-  {
-    label: "运营矩阵中心",
+    label: "运营中心",
     href: "/operations",
-    icon: UsersRound,
+    icon: Radar,
   },
   {
     label: "洞察中心",
     href: "/insights",
     icon: ChartSpline,
+  },
+  {
+    label: "品牌资源中心",
+    href: "/assets",
+    icon: Boxes,
   },
 ];
 
@@ -75,14 +76,14 @@ const secondaryItems = [
     icon: BrainCircuit,
   },
   {
+    label: "数字员工管理",
+    href: "/agents",
+    icon: Bot,
+  },
+  {
     label: "系统偏好设置",
     href: "/settings",
     icon: ServerCog,
-  },
-  {
-    label: "团队日程",
-    href: "/calendar",
-    icon: CalendarClock,
   },
   {
     label: "知识库",
