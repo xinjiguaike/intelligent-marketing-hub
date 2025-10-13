@@ -416,7 +416,7 @@ export const personalBoards: Array<PersonalBoard & { id: string }> = [
         tasks: [
           {
             id: "lane-active-01",
-            title: "消费者心智地图自适应调优",
+            title: "消费者心智地图调优",
             category: "调研",
             dueAt: "2024-07-12T18:00:00+08:00",
             priority: "medium",
