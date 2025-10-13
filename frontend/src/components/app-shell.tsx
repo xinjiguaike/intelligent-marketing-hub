@@ -103,11 +103,8 @@ export function AppShell({ children }: AppShellProps) {
             <BrainCircuit className="h-6 w-6 text-slate-950" />
           </div>
           <div className="flex flex-col">
-            <span className="text-base font-semibold uppercase tracking-widest text-slate-100">
-              A-Mind
-            </span>
-            <span className="text-[11px] uppercase tracking-[0.4em] text-slate-400">
-              Intelligent Hub
+            <span className="text-base font-semibold tracking-widest text-slate-100">
+              IntelliM
             </span>
           </div>
         </div>
