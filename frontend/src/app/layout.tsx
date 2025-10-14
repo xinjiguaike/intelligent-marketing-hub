@@ -27,10 +27,10 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-transparent`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[radial-gradient(140%_140%_at_10%_10%,rgba(148,197,255,0.28),transparent),linear-gradient(180deg,#f8faff_0%,#e2e8f0_100%)] text-slate-900`}
       >
         <div className="relative min-h-screen overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.18),transparent_65%),radial-gradient(circle_at_bottom,_rgba(14,165,233,0.12),transparent_60%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(50%_60%_at_20%_0%,rgba(126,196,252,0.35),transparent),radial-gradient(45%_55%_at_80%_15%,rgba(183,233,255,0.35),transparent_70%)]" />
           <div className="relative">
             <AppShell>{children}</AppShell>
           </div>

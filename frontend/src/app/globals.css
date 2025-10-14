@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
-  --background: #0a0a0f;
-  --background-alt: #1a1a2e;
-  --surface-glass: rgba(15, 23, 42, 0.55);
-  --surface-border: rgba(94, 234, 212, 0.2);
-  --foreground: #f8fafc;
-  --foreground-muted: #94a3b8;
-  --accent: #38bdf8;
-  --accent-strong: #06b6d4;
-  --danger: #f87171;
-  --glow: rgba(56, 189, 248, 0.45);
+  color-scheme: light;
+  --background: #f8faff;
+  --background-alt: #e2e8f0;
+  --surface-glass: rgba(255, 255, 255, 0.75);
+  --surface-border: rgba(148, 163, 184, 0.35);
+  --foreground: #0f172a;
+  --foreground-muted: #64748b;
+  --accent: #3b82f6;
+  --accent-strong: #0ea5e9;
+  --danger: #dc2626;
+  --glow: rgba(59, 130, 246, 0.28);
 }
 
 @theme inline {
@@ -30,8 +30,8 @@
 body {
   min-height: 100vh;
   background:
-    radial-gradient(120% 120% at 10% 10%, rgba(96, 165, 250, 0.18), transparent),
-    radial-gradient(110% 110% at 90% 20%, rgba(56, 189, 248, 0.22), transparent),
+    radial-gradient(120% 120% at 10% 10%, rgba(59, 130, 246, 0.12), transparent),
+    radial-gradient(110% 110% at 90% 20%, rgba(14, 165, 233, 0.16), transparent),
     linear-gradient(160deg, var(--background), var(--background-alt));
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont,
@@ -40,6 +40,188 @@ body {
 }
 
 ::selection {
-  background: rgba(14, 165, 233, 0.35);
+  background: rgba(59, 130, 246, 0.2);
   color: var(--foreground);
+}
+
+@layer utilities {
+  .border-white\/10 {
+    border-color: rgba(148, 163, 184, 0.45) !important;
+  }
+
+  .border-white\/5 {
+    border-color: rgba(203, 213, 225, 0.4) !important;
+  }
+
+  .border-white\/15 {
+    border-color: rgba(148, 163, 184, 0.35) !important;
+  }
+
+  .border-white\/20 {
+    border-color: rgba(148, 163, 184, 0.3) !important;
+  }
+
+  .divide-white\/5 > :not([hidden]) ~ :not([hidden]) {
+    --tw-divide-opacity: 1;
+    border-color: rgba(203, 213, 225, 0.35) !important;
+  }
+
+  .bg-slate-950\/40 {
+    background-color: rgba(255, 255, 255, 0.65) !important;
+  }
+
+  .bg-slate-950\/45 {
+    background-color: rgba(255, 255, 255, 0.68) !important;
+  }
+
+  .bg-slate-950\/50 {
+    background-color: rgba(255, 255, 255, 0.72) !important;
+  }
+
+  .bg-slate-950\/60 {
+    background-color: rgba(255, 255, 255, 0.78) !important;
+  }
+
+  .bg-slate-950\/70 {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  .bg-slate-950\/80 {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+  }
+
+  .bg-slate-950\/95 {
+    background-color: rgba(255, 255, 255, 0.98) !important;
+  }
+
+  .bg-slate-900 {
+    background-color: rgba(226, 232, 240, 0.92) !important;
+  }
+
+  .bg-slate-900\/60 {
+    background-color: rgba(226, 232, 240, 0.82) !important;
+  }
+
+  .bg-white\/5 {
+    background-color: rgba(244, 248, 255, 0.9) !important;
+  }
+
+  .bg-white\/10 {
+    background-color: rgba(233, 244, 255, 0.94) !important;
+  }
+
+  .bg-white\/15 {
+    background-color: rgba(221, 237, 255, 0.96) !important;
+  }
+
+  .bg-white\/20 {
+    background-color: rgba(208, 231, 255, 0.98) !important;
+  }
+
+  .bg-white\/\[0\.05\] {
+    background-color: rgba(244, 248, 255, 0.92) !important;
+  }
+
+  .bg-white\/\[0\.04\] {
+    background-color: rgba(244, 248, 255, 0.88) !important;
+  }
+
+  .bg-white\/\[0\.02\] {
+    background-color: rgba(248, 250, 255, 0.85) !important;
+  }
+
+  .bg-white\/\[0\.06\] {
+    background-color: rgba(241, 246, 255, 0.94) !important;
+  }
+
+  .bg-white\/10:hover,
+  .bg-white\/5:hover,
+  .bg-white\/\[0\.05\]:hover {
+    background-color: rgba(210, 231, 255, 0.95) !important;
+  }
+
+  .text-slate-300 {
+    color: #475569 !important;
+  }
+
+  .text-slate-200 {
+    color: #1f2937 !important;
+  }
+
+  .text-slate-100,
+  .text-slate-50 {
+    color: #0f172a !important;
+  }
+
+  .text-slate-400 {
+    color: #64748b !important;
+  }
+
+  .text-white {
+    color: var(--foreground) !important;
+  }
+
+  .hover\:text-white:hover {
+    color: var(--accent-strong) !important;
+  }
+
+  .group:hover .group-hover\:text-white {
+    color: var(--accent-strong) !important;
+  }
+
+  .text-sky-50,
+  .text-sky-100 {
+    color: var(--accent-strong) !important;
+  }
+
+  .text-sky-200 {
+    color: var(--accent) !important;
+  }
+
+  .text-emerald-100,
+  .text-emerald-200 {
+    color: #047857 !important;
+  }
+
+  .text-rose-50,
+  .text-rose-100 {
+    color: #be123c !important;
+  }
+
+  .text-amber-100,
+  .text-amber-200 {
+    color: #b45309 !important;
+  }
+
+  .glass-panel :where(.text-white) {
+    color: var(--foreground) !important;
+  }
+
+  .glass-panel :where(.text-slate-200, .text-slate-300, .text-slate-400) {
+    color: #475569 !important;
+  }
+
+  .bg-slate-950\/40 :where(.text-white),
+  .bg-slate-950\/45 :where(.text-white),
+  .bg-slate-950\/50 :where(.text-white),
+  .bg-slate-950\/60 :where(.text-white),
+  .bg-slate-950\/70 :where(.text-white),
+  .bg-slate-950\/80 :where(.text-white),
+  .bg-slate-950\/95 :where(.text-white),
+  .bg-slate-900 :where(.text-white),
+  .bg-slate-900\/60 :where(.text-white) {
+    color: var(--foreground) !important;
+  }
+
+  .bg-slate-950\/40 :where(.text-slate-200, .text-slate-300, .text-slate-400),
+  .bg-slate-950\/45 :where(.text-slate-200, .text-slate-300, .text-slate-400),
+  .bg-slate-950\/50 :where(.text-slate-200, .text-slate-300, .text-slate-400),
+  .bg-slate-950\/60 :where(.text-slate-200, .text-slate-300, .text-slate-400),
+  .bg-slate-950\/70 :where(.text-slate-200, .text-slate-300, .text-slate-400),
+  .bg-slate-950\/80 :where(.text-slate-200, .text-slate-300, .text-slate-400),
+  .bg-slate-950\/95 :where(.text-slate-200, .text-slate-300, .text-slate-400),
+  .bg-slate-900 :where(.text-slate-200, .text-slate-300, .text-slate-400),
+  .bg-slate-900\/60 :where(.text-slate-200, .text-slate-300, .text-slate-400) {
+    color: #475569 !important;
+  }
 }
