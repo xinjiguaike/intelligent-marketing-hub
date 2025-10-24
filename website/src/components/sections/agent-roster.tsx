@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { agentProfiles } from "@/data/mock/site";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { asset } from "@/lib/utils";
 import {
   BrainCircuit,
   ChartNoAxesColumn,
@@ -49,7 +50,7 @@ export function AgentRoster() {
         <div className="flex justify-center lg:justify-end">
           <div className="relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-gradient-to-br from-white via-blue-50 to-white p-6 shadow-[0_22px_45px_rgba(15,23,42,0.1)]">
             <Image
-              src="/images/agent-network.svg"
+              src={asset("/images/agent-network.svg")}
               alt="数字员工协同关系示意"
               width={520}
               height={320}

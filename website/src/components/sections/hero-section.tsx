@@ -1,8 +1,9 @@
 'use client';
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { heroContent } from "@/data/mock/site";
+import Image from "next/image";
+import { asset } from "@/lib/utils";
 
 export function HeroSection() {
   return (
@@ -76,11 +77,11 @@ export function HeroSection() {
               </span>
             </div>
             <div className="mt-5">
-              <Image
-                src="/images/hero-illustration.svg"
-                alt="IntelliM 智能驾驶舱视图示意"
-                width={520}
-                height={360}
+            <Image
+              src={asset("/images/hero-illustration.svg")}
+              alt="IntelliM 智能驾驶舱视图示意"
+              width={520}
+              height={360}
                 className="h-auto w-full"
                 priority
               />

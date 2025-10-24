@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { solutionScenarios } from "@/data/mock/site";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { asset } from "@/lib/utils";
 
 export function SolutionsOverview() {
   return (
@@ -39,7 +40,7 @@ export function SolutionsOverview() {
           </div>
           <div className="mt-6">
             <Image
-              src="/images/team-collaboration.svg"
+              src={asset("/images/team-collaboration.svg")}
               alt="团队协同界面示意"
               width={520}
               height={320}
