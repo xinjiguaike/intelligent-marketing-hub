@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { motion } from "framer-motion";
 import { heroContent } from "@/data/mock/site";
-import Image from "next/image";
 import { asset } from "@/lib/utils";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function HeroSection() {
   return (
@@ -25,17 +25,9 @@ export function HeroSection() {
           <h1 className="text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">
             {heroContent.title}
           </h1>
-          <p className="text-lg leading-8 text-slate-600">{heroContent.description}</p>
-          <ul className="grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-2 w-2 rounded-full bg-blue-600" />
-              <span>六大模块串联策略、洞察、协作与执行。</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="mt-1 h-2 w-2 rounded-full bg-blue-600" />
-              <span>指标、素材与排期自动沉淀，团队专注关键决策。</span>
-            </li>
-          </ul>
+          <p className="text-lg leading-8 text-slate-600">
+            {heroContent.description}
+          </p>
           <div className="flex flex-wrap items-center gap-4">
             <a
               href={heroContent.primaryCta.href}
@@ -77,11 +69,11 @@ export function HeroSection() {
               </span>
             </div>
             <div className="mt-5">
-            <Image
-              src={asset("/images/hero-illustration.svg")}
-              alt="IntelliM 智能驾驶舱视图示意"
-              width={520}
-              height={360}
+              <Image
+                src={asset("/images/hero-illustration.svg")}
+                alt="IntelliM 智能驾驶舱视图示意"
+                width={520}
+                height={360}
                 className="h-auto w-full"
                 priority
               />
