@@ -1,23 +1,53 @@
 <svg width="520" height="360" viewBox="0 0 520 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="520" height="360" rx="28" fill="url(#paint0_linear)" />
-  <rect x="40" y="44" width="220" height="20" rx="10" fill="#E2E8F0" />
-  <rect x="40" y="84" width="440" height="200" rx="18" fill="white" opacity="0.85" />
-  <rect x="60" y="110" width="160" height="12" rx="6" fill="#38BDF8" opacity="0.75" />
-  <rect x="60" y="132" width="200" height="10" rx="5" fill="#3B82F6" opacity="0.4" />
-  <rect x="60" y="154" width="180" height="10" rx="5" fill="#3B82F6" opacity="0.35" />
-  <rect x="60" y="190" width="180" height="110" rx="12" fill="#EFF6FF" />
-  <path d="M80 272L120 218L158 254L176 238L220 272" stroke="#3B82F6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="180" cy="225" r="6" fill="#0EA5E9"/>
-  <rect x="260" y="190" width="180" height="110" rx="12" fill="#E0F2FE" />
-  <rect x="280" y="210" width="92" height="12" rx="6" fill="#3B82F6" opacity="0.7" />
-  <rect x="280" y="232" width="120" height="10" rx="5" fill="#3B82F6" opacity="0.35" />
-  <rect x="280" y="252" width="140" height="10" rx="5" fill="#38BDF8" opacity="0.4" />
-  <circle cx="420" cy="238" r="26" fill="#0EA5E9" opacity="0.2" />
-  <path d="M410 238L416 244L430 230" stroke="#0EA5E9" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
   <defs>
-    <linearGradient id="paint0_linear" x1="0" y1="0" x2="468" y2="360" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F8FBFF"/>
-      <stop offset="1" stop-color="#E6F4FF"/>
+    <linearGradient id="insight-bg" x1="40" y1="20" x2="460" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6FAFF"/>
+      <stop offset="1" stop-color="#E6F3FF"/>
     </linearGradient>
+    <linearGradient id="metric-card" x1="0" y1="0" x2="0.8" y2="1">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F0F5FF"/>
+    </linearGradient>
+    <filter id="insight-shadow">
+      <feDropShadow dx="0" dy="18" stdDeviation="28" flood-color="#0F172A" flood-opacity="0.08" />
+    </filter>
   </defs>
+  <rect x="20" y="16" width="480" height="328" rx="36" fill="url(#insight-bg)" />
+  <g filter="url(#insight-shadow)">
+    <rect x="52" y="64" width="416" height="232" rx="28" fill="url(#metric-card)" />
+  </g>
+  <g transform="translate(76 88)">
+    <rect width="156" height="18" rx="9" fill="#C9DBFF"/>
+    <rect y="28" width="220" height="12" rx="6" fill="#9EB7F8" opacity="0.6"/>
+    <rect y="48" width="196" height="12" rx="6" fill="#9EB7F8" opacity="0.35"/>
+    <rect y="68" width="172" height="10" rx="5" fill="#9EB7F8" opacity="0.2"/>
+  </g>
+  <g transform="translate(288 92)">
+    <rect width="160" height="120" rx="22" fill="#F1F5FF"/>
+    <rect x="24" y="20" width="112" height="10" rx="5" fill="#94C5FF" opacity="0.75"/>
+    <rect x="24" y="38" width="130" height="8" rx="4" fill="#94C5FF" opacity="0.45"/>
+    <rect x="24" y="96" width="104" height="14" rx="7" fill="#3B82F6" opacity="0.7"/>
+    <path d="M34 82C50 56 74 86 92 70C110 54 122 76 136 60" stroke="#2563EB" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+  </g>
+  <g transform="translate(76 162)">
+    <rect width="180" height="120" rx="20" fill="#0EA5E9" opacity="0.07"/>
+    <path d="M24 100C48 52 80 90 104 70C128 50 144 70 156 82" stroke="#0EA5E9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="72" cy="74" r="5.5" fill="#0EA5E9"/>
+    <circle cx="110" cy="58" r="5.5" fill="#0EA5E9"/>
+    <circle cx="142" cy="74" r="5.5" fill="#0EA5E9"/>
+  </g>
+  <g transform="translate(276 232)">
+    <rect width="192" height="76" rx="17" fill="white" opacity="0.94"/>
+    <rect x="20" y="18" width="90" height="11" rx="5.5" fill="#BFD6FF"/>
+    <rect x="20" y="36" width="52" height="9" rx="4.5" fill="#D4E4FF"/>
+    <rect x="20" y="54" width="72" height="9" rx="4.5" fill="#D4E4FF"/>
+    <rect x="122" y="18" width="50" height="40" rx="12" fill="#2563EB" opacity="0.75"/>
+    <path d="M140 32L148 40L164 24" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g transform="translate(92 302)">
+    <rect width="336" height="44" rx="14" fill="white" opacity="0.92"/>
+    <rect x="18" y="14" width="120" height="12" rx="6" fill="#BFD6FF" opacity="0.85"/>
+    <rect x="154" y="14" width="80" height="12" rx="6" fill="#BFD6FF" opacity="0.5"/>
+    <rect x="250" y="14" width="62" height="12" rx="6" fill="#3B82F6" opacity="0.6"/>
+  </g>
 </svg>
