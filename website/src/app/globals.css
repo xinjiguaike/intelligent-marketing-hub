@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: radial-gradient(circle at 20% -10%, rgba(19, 99, 223, 0.15), transparent 60%),
+    radial-gradient(circle at 80% 0%, rgba(71, 182, 212, 0.12), transparent 55%),
+    #f5f7fb;
+  color: #0f172a;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont;
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  padding-top: 3.5rem;
+  padding-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+  main {
+    gap: 3rem;
+    padding-bottom: 3.5rem;
+  }
+}
