@@ -29,11 +29,11 @@ export function HeroSection() {
           <ul className="grid gap-3 text-sm text-slate-500 sm:grid-cols-2">
             <li className="flex items-start gap-2">
               <span className="mt-1 h-2 w-2 rounded-full bg-blue-600" />
-              <span>策略、洞察、协同、执行一体化流程，加速 KA 品牌策划。</span>
+              <span>六大模块串联策略、洞察、协作与执行。</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1 h-2 w-2 rounded-full bg-blue-600" />
-              <span>数字员工与真人团队按角色分工协作，交付进度全程可视。</span>
+              <span>指标、素材与排期自动沉淀，团队专注关键决策。</span>
             </li>
           </ul>
           <div className="flex flex-wrap items-center gap-4">
