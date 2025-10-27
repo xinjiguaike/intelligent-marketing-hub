@@ -9,11 +9,17 @@ export function FAQSection() {
         title="部署与合作常见问答"
         description="以下为客户最关注的问题。如需更多信息，可联系线下顾问获取演示与定制化方案。"
       />
-      <div className="grid gap-6 md:grid-cols-2">
-        {faqs.map((faq) => (
-          <div key={faq.question} className="space-y-3">
-            <h3 className="text-base font-semibold text-slate-900">{faq.question}</h3>
-            <p className="leading-7 text-slate-600">{faq.answer}</p>
+      <div className="divide-y divide-slate-200">
+        {faqs.map((faq, idx) => (
+          <div key={faq.question} className="py-5">
+            <div className="flex items-start gap-3 text-sm text-blue-600">
+              <span className="font-semibold">Q:</span>
+              <p className="text-base font-semibold text-slate-900">{faq.question}</p>
+            </div>
+            <div className="mt-2 flex items-start gap-3 text-sm leading-6 text-slate-600">
+              <span className="font-semibold text-blue-500">A:</span>
+              <p>{faq.answer}</p>
+            </div>
           </div>
         ))}
       </div>
