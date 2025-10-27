@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   coreValuePropositions,
-  humanCollaborationHighlights,
+  flowNarrative,
 } from "@/data/mock/site";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { cn } from "@/lib/utils";
@@ -13,13 +14,11 @@ const tabs = [
     key: "core",
     label: "核心价值",
     description: "聚焦策略、执行与复盘的全链路价值主张。",
-    items: coreValuePropositions,
   },
   {
-    key: "collab",
-    label: "人机协同",
-    description: "展示数字员工与真人团队的协同亮点。",
-    items: humanCollaborationHighlights,
+    key: "timeline",
+    label: "人机协同流程",
+    description: "呈现人机协同的四个阶段，理解项目推进节奏。",
   },
 ] as const;
 
@@ -57,22 +56,54 @@ export function ValuePropositionGrid() {
           ))}
         </div>
         <p className="text-sm text-slate-600">{current.description}</p>
-        <div className="grid gap-6 md:grid-cols-3">
-          {current.items.map((item) => (
-            <div key={item.title} className="flex flex-col gap-2">
-              <div className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600">
-                <span className="h-9 w-9 rounded-full bg-blue-100 text-center text-sm leading-9">
-                  {item.title.slice(0, 1)}
-                </span>
-                {item.title}
+        {activeTab === "core" ? (
+          <div className="grid gap-6 md:grid-cols-3">
+            {coreValuePropositions.map((item) => (
+              <div key={item.title} className="flex flex-col gap-2">
+                <div className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600">
+                  <span className="h-9 w-9 rounded-full bg-blue-100 text-center text-sm leading-9">
+                    {item.title.slice(0, 1)}
+                  </span>
+                  {item.title}
+                </div>
+                <p className="text-sm leading-6 text-slate-600">
+                  {item.description}
+                </p>
+                <p className="text-xs leading-5 text-slate-500">{item.detail}</p>
               </div>
-              <p className="text-sm leading-6 text-slate-600">
-                {item.description}
-              </p>
-              <p className="text-xs leading-5 text-slate-500">{item.detail}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="relative">
+            <span className="absolute left-5 top-4 hidden h-[calc(100%-2rem)] w-px bg-gradient-to-b from-blue-200 via-slate-200 to-transparent md:block" />
+            <ol className="space-y-8">
+              {flowNarrative.map((item, index) => (
+                <motion.li
+                  key={item.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.15, duration: 0.4 }}
+                  className="relative flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:pl-16"
+                >
+                  <span className="absolute left-3 top-3 hidden h-6 w-6 rounded-full border-4 border-white bg-blue-500 shadow md:block" />
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+                    阶段 {String(index + 1).padStart(2, "0")}
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+                  <ul className="space-y-1 text-sm leading-6 text-slate-600">
+                    {[item.summary, item.reference].map((text, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-blue-500" />
+                        <span>{text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.li>
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
     </section>
   );

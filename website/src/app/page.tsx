@@ -2,7 +2,6 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ValuePropositionGrid } from "@/components/sections/value-proposition-grid";
-import { FlowNarrative } from "@/components/sections/flow-narrative";
 import { ModuleShowcase } from "@/components/sections/module-showcase";
 import { AgentRoster } from "@/components/sections/agent-roster";
 import { SolutionsOverview } from "@/components/sections/solutions-overview";
@@ -20,7 +19,6 @@ export default function Home() {
         <HeroSection />
         <div className="relative z-10 mx-auto flex max-w-6xl flex-col gap-24 px-4 sm:px-8">
           <ValuePropositionGrid />
-          <FlowNarrative />
           <ModuleShowcase />
           <AgentRoster />
           <SolutionsOverview />
