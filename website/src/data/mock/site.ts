@@ -22,7 +22,7 @@ export const heroContent = {
   ],
 };
 
-export const valuePropositions = [
+export const coreValuePropositions = [
   {
     title: "策划 → 执行全链路协同",
     description:
@@ -43,6 +43,30 @@ export const valuePropositions = [
       "洞察中心聚合渠道信号，自动产出行动草案并沉淀复盘资产。",
     detail:
       "实时监测到复盘归档一条链路，经验随时复用。",
+  },
+];
+
+export const humanCollaborationHighlights = [
+  {
+    title: "数字员工角色清晰",
+    description:
+      "策略、洞察、创意与执行 AI 分工明确，自动衔接真人节点。",
+    detail:
+      "交接状态与责任人同屏可见，避免信息在多工具间流失。",
+  },
+  {
+    title: "人机协作节奏轻盈",
+    description:
+      "AI 推行日程、提醒审核，真人聚焦关键判断与关系维护。",
+    detail:
+      "会议纪要、行动项与素材沉淀下来，形成可复用的协作节奏。",
+  },
+  {
+    title: "权限与流程易定制",
+    description:
+      "支持按组织结构调整权限、视图与交付模板，贴合企业工作方式。",
+    detail:
+      "营销中台、品牌侧、代理商都可在同一体系内协作。",
   },
 ];
 
