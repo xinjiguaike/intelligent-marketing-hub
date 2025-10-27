@@ -12,9 +12,9 @@ export function ValuePropositionGrid() {
           description="聚焦策划协同、团队共创与数据复盘三大场景，覆盖从战略决策到执行落地的每一个关键节点。"
           align="left"
         />
-        <div className="grid gap-10 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3">
           {valuePropositions.map((item) => (
-            <div key={item.title} className="flex flex-col gap-3">
+            <div key={item.title} className="flex flex-col gap-2">
               <div className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600">
                 <span className="h-10 w-10 rounded-full bg-blue-100 text-center text-base leading-10">
                   {item.title.slice(0, 1)}

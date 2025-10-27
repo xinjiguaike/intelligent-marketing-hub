@@ -18,7 +18,7 @@ export function SolutionsOverview() {
             我们将线下销售流程拆解为洞察研判、协作推进、执行落地与复盘沉淀四个阶段，基于行业最佳实践构建项目模板，
             帮助大型品牌快速复制成功经验并保持品牌语调统一。
           </p>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-3">
             {solutionScenarios.map((scenario) => (
               <article key={scenario.title} className="rounded-2xl border border-slate-200 bg-white/85 p-5 shadow-sm">
                 <h3 className="text-base font-semibold text-slate-900">{scenario.title}</h3>

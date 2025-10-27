@@ -23,7 +23,7 @@ const iconMap: Record<string, LucideIcon> = {
 
 export function AgentRoster() {
   return (
-    <section id="agents" className="relative space-y-12 border-t border-slate-200 pt-16">
+    <section id="agents" className="relative space-y-10 border-t border-slate-200 pt-16">
       <div className="pointer-events-none absolute inset-x-0 top-12 h-64 bg-gradient-to-r from-blue-200/30 via-transparent to-cyan-200/30 blur-3xl" />
       <SectionHeading
         eyebrow="数字员工体系"
@@ -32,19 +32,19 @@ export function AgentRoster() {
       />
 
       <div className="relative grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-        <div className="space-y-5">
+        <div className="space-y-4">
           <div className="inline-flex items-center gap-2 rounded-full bg-blue-100/70 px-4 py-2 text-xs font-semibold text-blue-600">
             <Users className="h-3.5 w-3.5" />
             人机协同亮点
           </div>
           <p className="text-base leading-7 text-slate-600">
-            策略指挥官同步战役目标，洞察分析师持续推送机会，创意制作人输出多模态资产，执行调度员掌控任务节奏。
-            AI 负责深入计算与补位，真人团队掌管判断与关系，形成稳健的组合拳。
+            策略指挥官同步项目目标，洞察分析师推送机会，创意制作人输出多模态资产，执行调度员掌控节奏。
+            AI 负责算力与提醒，真人团队聚焦判断与关系。
           </p>
           <ul className="space-y-3 text-sm leading-6 text-slate-600">
-            <li>· 同一视图查看 AI 与真人的交接状态与责任人</li>
-            <li>· 每个数字员工保留交付记录与复盘档案，便于沉淀知识</li>
-            <li>· 按组织结构配置权限，可匹配品牌自有团队角色</li>
+            <li>· 同一视图查看人机交接状态</li>
+            <li>· 数字员工自动记录交付与复盘</li>
+            <li>· 可按组织结构配置权限与角色</li>
           </ul>
         </div>
         <div className="flex justify-center lg:justify-end">

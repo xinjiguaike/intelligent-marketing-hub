@@ -3,7 +3,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 
 export function FlowNarrative() {
   return (
-    <section className="space-y-12 border-t border-slate-200 pt-16">
+    <section className="space-y-8 border-t border-slate-200 pt-16">
       <SectionHeading
         eyebrow="人机协同流程"
         title="从洞察点亮到执行闭环的四段式旅程"
@@ -12,7 +12,7 @@ export function FlowNarrative() {
       />
       <div className="relative">
         <span className="absolute left-6 top-4 hidden h-[calc(100%-2rem)] w-px bg-gradient-to-b from-blue-200 via-slate-200 to-transparent md:block" />
-        <ol className="space-y-12">
+        <ol className="space-y-10">
           {flowNarrative.map((item, index) => (
             <li key={item.title} className="relative flex flex-col gap-3 md:pl-16">
               <span className="absolute left-3 top-1 hidden h-6 w-6 rounded-full border-4 border-white bg-blue-500 shadow-md md:block" />

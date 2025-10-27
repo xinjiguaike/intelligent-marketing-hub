@@ -3,7 +3,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 
 export function CaseStudies() {
   return (
-    <section id="cases" className="space-y-12 border-t border-slate-200 pt-16">
+    <section id="cases" className="space-y-10 border-t border-slate-200 pt-16">
       <SectionHeading
         eyebrow="成功案例"
         title="行业头部品牌的增长实践"

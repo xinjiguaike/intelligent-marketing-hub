@@ -13,7 +13,7 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   const alignment = align === "center" ? "text-center items-center" : "text-left";
   return (
-    <div className={`flex flex-col gap-3 ${alignment}`}>
+    <div className={`flex flex-col gap-2 ${alignment}`}>
       {eyebrow ? (
         <span className="text-xs uppercase tracking-[0.4em] text-blue-600">
           {eyebrow}
@@ -21,7 +21,7 @@ export function SectionHeading({
       ) : null}
       <h2 className="text-2xl font-semibold text-slate-900 sm:text-3xl">{title}</h2>
       {description ? (
-        <p className="max-w-2xl text-base leading-7 text-slate-600">
+        <p className="max-w-2xl text-sm leading-6 text-slate-600">
           {description}
         </p>
       ) : null}

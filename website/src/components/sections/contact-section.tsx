@@ -25,7 +25,7 @@ export function ContactSection() {
         title="预约线下交流或深度演示"
         description="请留下您的需求与联系方式，我们将在 1 个工作日内与您联系，提供定制化的营销项目策划与系统演示。"
       />
-      <div className="grid gap-8 lg:grid-cols-[3fr_2fr]">
+      <div className="grid gap-6 lg:grid-cols-[3fr_2fr]">
         <form
           onSubmit={handleSubmit}
           className="grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 text-sm text-slate-600 shadow-sm"

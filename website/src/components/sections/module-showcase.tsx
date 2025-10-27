@@ -8,13 +8,13 @@ export function ModuleShowcase() {
   return (
     <section id="modules" className="relative border-t border-slate-200 pt-16">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.18),_transparent_65%)]" />
-      <div className="relative space-y-12">
+      <div className="relative space-y-10">
         <SectionHeading
           eyebrow="能力矩阵"
           title="六大能力协同打造营销智能中枢"
           description="六大模块覆盖策略洞察、协作执行、创意产出与渠道运营，全流程在人机协同中完成，从目标制定到复盘沉淀实现连续闭环。"
         />
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {moduleShowcase.map((module, index) => (
             <motion.div
               key={module.id}
@@ -22,7 +22,7 @@ export function ModuleShowcase() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.05 }}
-              className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-white/40"
+              className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-white/40"
             >
               <div className="flex items-center gap-3">
                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold text-blue-600">
