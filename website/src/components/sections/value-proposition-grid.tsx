@@ -35,7 +35,7 @@ export function ValuePropositionGrid() {
         <SectionHeading
           eyebrow="产品亮点"
           title="核心价值与人机协同"
-          description="在一屏中快速了解 IntelliM 的核心价值与协同优势。"
+          description="一键切换视角，了解核心价值与人机协同节奏。"
           align="left"
         />
         <div className="flex flex-wrap items-center gap-3 text-sm">
