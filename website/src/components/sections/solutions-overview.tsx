@@ -20,14 +20,19 @@ export function SolutionsOverview() {
           </p>
           <div className="grid gap-5 md:grid-cols-3">
             {solutionScenarios.map((scenario) => (
-              <article key={scenario.title} className="rounded-2xl border border-slate-200 bg-white/85 p-5 shadow-sm">
-                <h3 className="text-base font-semibold text-slate-900">{scenario.title}</h3>
-                <ul className="mt-3 space-y-2 text-sm text-slate-600">
-                  {scenario.outcomes.map((outcome) => (
-                    <li key={outcome}>· {outcome}</li>
-                  ))}
-                </ul>
-              </article>
+              <div
+                key={scenario.title}
+                className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white/85 p-5 text-center shadow-sm"
+              >
+                <div className="space-y-3">
+                  <h3 className="text-base font-semibold text-slate-900">{scenario.title}</h3>
+                  <ul className="space-y-2 text-sm text-slate-600">
+                    {scenario.outcomes.map((outcome) => (
+                      <li key={outcome} className="leading-6">· {outcome}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             ))}
           </div>
         </div>
