@@ -70,30 +70,28 @@ export function AgentRoster() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3 }}
-              className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/90 p-6 shadow-sm transition hover:-translate-y-1.5 hover:shadow-lg"
+              className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white/90 p-6 text-center shadow-sm transition hover:-translate-y-1.5 hover:shadow-lg"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100/25 via-transparent to-cyan-100/25 opacity-80" />
-              <div className="relative space-y-4">
-                <div className="flex items-start gap-3">
-                  <span className="rounded-2xl bg-gradient-to-br from-blue-500 via-sky-500 to-cyan-400 p-3 text-white shadow-lg">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-900">{agent.name}</h3>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">{agent.description}</p>
-                  </div>
+              <div className="relative flex flex-1 flex-col items-center gap-4">
+                <span className="rounded-2xl bg-gradient-to-br from-blue-500 via-sky-500 to-cyan-400 p-3 text-white shadow-lg">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <div className="space-y-2">
+                  <h3 className="text-base font-semibold text-slate-900">{agent.name}</h3>
+                  <p className="text-sm leading-6 text-slate-600">{agent.description}</p>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white/85 p-4 text-xs leading-6 text-slate-500">
-                  <p className="text-slate-500">典型交付物</p>
-                  <ul className="mt-2 space-y-1.5">
-                    {agent.deliverables.map((deliverable) => (
-                      <li key={deliverable} className="flex items-center gap-2">
-                        <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-                        <span>{deliverable}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              </div>
+              <div className="relative mt-6 flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white/85 p-4 text-xs leading-6 text-slate-500">
+                <p className="font-semibold text-slate-500">典型交付物</p>
+                <ul className="space-y-1.5 text-slate-600">
+                  {agent.deliverables.map((deliverable) => (
+                    <li key={deliverable} className="flex items-center justify-center gap-2 text-xs">
+                      <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+                      <span>{deliverable}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.article>
           );
