@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  coreValuePropositions,
-  flowNarrative,
-} from "@/data/mock/site";
+import { coreValuePropositions, flowNarrative } from "@/data/mock/site";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { cn } from "@/lib/utils";
 
@@ -35,7 +32,7 @@ export function ValuePropositionGrid() {
         <SectionHeading
           eyebrow="产品亮点"
           title="核心价值与人机协同"
-          description="一键切换视角，了解核心价值与人机协同节奏。"
+          description="了解核心价值与人机协同节奏。"
           align="left"
         />
         <div className="flex flex-wrap items-center gap-3 text-sm">
@@ -59,18 +56,25 @@ export function ValuePropositionGrid() {
         {activeTab === "core" ? (
           <div className="grid gap-6 md:grid-cols-3">
             {coreValuePropositions.map((item) => (
-              <div key={item.title} className="flex flex-col gap-2">
-                <div className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600">
-                  <span className="h-9 w-9 rounded-full bg-blue-100 text-center text-sm leading-9">
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35 }}
+                className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+              >
+                <div className="inline-flex items-center gap-3 text-sm font-semibold text-blue-600">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-base font-semibold text-blue-600">
                     {item.title.slice(0, 1)}
                   </span>
                   {item.title}
                 </div>
-                <p className="text-sm leading-6 text-slate-600">
+                <p className="text-sm font-medium leading-6 text-slate-700">
                   {item.description}
                 </p>
                 <p className="text-xs leading-5 text-slate-500">{item.detail}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         ) : (
