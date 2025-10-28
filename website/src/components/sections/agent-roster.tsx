@@ -82,11 +82,11 @@ export function AgentRoster() {
                   <p className="text-sm leading-6 text-slate-600">{agent.description}</p>
                 </div>
               </div>
-              <div className="relative mt-6 flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white/85 p-4 text-xs leading-6 text-slate-500">
+              <div className="relative mt-6 flex flex-col gap-2 text-left rounded-2xl border border-slate-200 bg-white/85 p-4 text-xs leading-6 text-slate-500">
                 <p className="font-semibold text-slate-500">典型交付物</p>
                 <ul className="space-y-1.5 text-slate-600">
                   {agent.deliverables.map((deliverable) => (
-                    <li key={deliverable} className="flex items-center justify-center gap-2 text-xs">
+                    <li key={deliverable} className="flex items-center gap-2 text-xs">
                       <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
                       <span>{deliverable}</span>
                     </li>
