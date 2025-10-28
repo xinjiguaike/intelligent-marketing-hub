@@ -1,11 +1,14 @@
-import Image from "next/image";
-import { solutionScenarios } from "@/data/mock/site";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { solutionScenarios } from "@/data/mock/site";
 import { asset } from "@/lib/utils";
+import Image from "next/image";
 
 export function SolutionsOverview() {
   return (
-    <section id="solutions" className="relative border-t border-slate-200 pt-16">
+    <section
+      id="solutions"
+      className="relative border-t border-slate-200 pt-16"
+    >
       <div className="pointer-events-none absolute inset-x-0 top-12 h-60 bg-gradient-to-r from-blue-200/25 via-transparent to-indigo-200/25 blur-3xl" />
       <div className="relative grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div className="space-y-6">
@@ -15,8 +18,8 @@ export function SolutionsOverview() {
             description="结合新品发布、达人共创、私域运营等典型营销项目，展示数字员工如何与真人团队协作，支撑线下销售转化。"
           />
           <p className="text-base leading-7 text-slate-600">
-            我们将线下销售流程拆解为洞察研判、协作推进、执行落地与复盘沉淀四个阶段，基于行业最佳实践构建项目模板，
-            帮助大型品牌快速复制成功经验并保持品牌语调统一。
+            我们将品牌营销流程拆解为洞察研判、协作推进、执行落地与复盘沉淀四个阶段，基于行业最佳实践构建项目模板，
+            帮助品牌快速复制成功经验并保持品牌语调统一。
           </p>
           <div className="grid gap-5 md:grid-cols-3">
             {solutionScenarios.map((scenario) => (
@@ -25,10 +28,14 @@ export function SolutionsOverview() {
                 className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white/85 p-5 text-center shadow-sm"
               >
                 <div className="space-y-3">
-                  <h3 className="text-base font-semibold text-slate-900">{scenario.title}</h3>
+                  <h3 className="text-base font-semibold text-slate-900">
+                    {scenario.title}
+                  </h3>
                   <ul className="space-y-2 text-sm text-slate-600">
                     {scenario.outcomes.map((outcome) => (
-                      <li key={outcome} className="leading-6">· {outcome}</li>
+                      <li key={outcome} className="leading-6">
+                        · {outcome}
+                      </li>
                     ))}
                   </ul>
                 </div>

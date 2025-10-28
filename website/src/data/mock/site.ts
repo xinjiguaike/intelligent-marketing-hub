@@ -195,7 +195,7 @@ export const agentProfiles = [
 
 export const solutionScenarios = [
   {
-    title: "新品发布整合营销项目",
+    title: "新品发布整合营销",
     outcomes: [
       "洞察 AI 识别核心受众与渠道组合，策略 AI 制定节奏计划",
       "创意 AI 在 48 小时内产出核心物料，真人团队快速审核上线",

@@ -7,7 +7,7 @@ export function CaseStudies() {
       <SectionHeading
         eyebrow="成功案例"
         title="行业头部品牌的增长实践"
-        description="通过真实营销项目的关键指标与洞察，展示 IntelliM 如何在不同场景提升效率、放大创意价值并沉淀复盘资产。"
+        description="通过真实营销项目的关键指标与洞察，看 IntelliM 如何在不同场景提升效率、放大创意价值并沉淀复盘资产。"
       />
       <div className="grid gap-8 md:grid-cols-3">
         {caseStudies.map((item) => (
