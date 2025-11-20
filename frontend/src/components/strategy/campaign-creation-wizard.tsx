@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   strategyAiDigest,
   strategyAiSuggestions,
@@ -11,6 +11,7 @@ import {
   strategyCollaborationTimeline,
   strategyHandoffSummary,
   strategyJointStructure,
+  strategyKeyOutputs,
   strategyPromptHistory,
   strategyVersionHistory,
   type StrategyBriefChecklistItem,
@@ -61,6 +62,23 @@ type SuggestionState = Array<
 >;
 type HandoffTask = (typeof strategyHandoffSummary.newTasks)[number] & {
   status: "pending" | "synced";
+};
+
+type BriefFormState = {
+  campaignName: string;
+  timeframe: string;
+  owner: string;
+  budget: string;
+  goalsInput: string;
+  channelsInput: string;
+  constraintsNote: string;
+};
+
+type InteractionNotesState = {
+  brief: string;
+  digest: string;
+  joint: string;
+  handoff: string;
 };
 
 const statusStyleMap = {
@@ -123,6 +141,24 @@ const suggestionStatusMap = {
   },
 } as const;
 
+const keyOutputStatusMap = {
+  "已生成": {
+    className: "text-emerald-200",
+  },
+  "人机共创中": {
+    className: "text-sky-200",
+  },
+  "待复核": {
+    className: "text-amber-200",
+  },
+} as const;
+
+const splitMultiValue = (value: string) =>
+  value
+    .split(/[，,、/\n]/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+
 function useTimers() {
   const timersRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
   useEffect(() => {
@@ -150,6 +186,23 @@ function useTimers() {
 
 export function CampaignCreationWizard() {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
+
+  const [briefForm, setBriefForm] = useState<BriefFormState>(() => ({
+    campaignName: strategyBriefSummary.campaignName,
+    timeframe: strategyBriefSummary.timeframe,
+    owner: strategyBriefSummary.owner,
+    budget: strategyBriefSummary.budget,
+    goalsInput: strategyBriefSummary.goals.join(" / "),
+    channelsInput: strategyBriefSummary.primaryChannels.join(" / "),
+    constraintsNote: "",
+  }));
+
+  const [interactionNotes, setInteractionNotes] = useState<InteractionNotesState>({
+    brief: "",
+    digest: "",
+    joint: "",
+    handoff: "",
+  });
 
   const [briefChecklist, setBriefChecklist] = useState<ChecklistState>(() =>
     strategyBriefChecklist.map((item) => ({
@@ -204,6 +257,21 @@ export function CampaignCreationWizard() {
   const { queue: queueTimer, clearAll: clearTimers } = useTimers();
 
   const activeStep = wizardSteps[activeStepIndex];
+
+  const handleBriefFormChange = (
+    field: keyof BriefFormState,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const value = event.target.value;
+    setBriefForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleInteractionNoteChange = (
+    key: keyof InteractionNotesState,
+    value: string
+  ) => {
+    setInteractionNotes((prev) => ({ ...prev, [key]: value }));
+  };
 
   const handleBriefCheck = () => {
     if (isBriefChecking) return;
@@ -387,6 +455,10 @@ export function CampaignCreationWizard() {
             onCheck={handleBriefCheck}
             isChecking={isBriefChecking}
             checkLog={briefCheckLog}
+            form={briefForm}
+            onFormChange={handleBriefFormChange}
+            aiNote={interactionNotes.brief}
+            onAiNoteChange={(value) => handleInteractionNoteChange("brief", value)}
           />
         )}
 
@@ -397,6 +469,8 @@ export function CampaignCreationWizard() {
             confirmations={confirmations}
             onResolve={handleResolveConfirmation}
             promptHistory={strategyPromptHistory}
+            aiNote={interactionNotes.digest}
+            onAiNoteChange={(value) => handleInteractionNoteChange("digest", value)}
           />
         )}
 
@@ -407,6 +481,9 @@ export function CampaignCreationWizard() {
             onAcceptSuggestion={handleAcceptSuggestion}
             timeline={strategyCollaborationTimeline}
             versions={strategyVersionHistory}
+            keyOutputs={strategyKeyOutputs}
+            aiNote={interactionNotes.joint}
+            onAiNoteChange={(value) => handleInteractionNoteChange("joint", value)}
           />
         )}
 
@@ -424,6 +501,8 @@ export function CampaignCreationWizard() {
             onApprovalComplete={handleApprovalComplete}
             onApprovalRemind={handleApprovalReminder}
             onExport={handleExport}
+            aiNote={interactionNotes.handoff}
+            onAiNoteChange={(value) => handleInteractionNoteChange("handoff", value)}
           />
         )}
       </div>
@@ -510,6 +589,13 @@ type BriefIntakeStepProps = {
   onCheck: () => void;
   isChecking: boolean;
   checkLog: string;
+  form: BriefFormState;
+  onFormChange: (
+    field: keyof BriefFormState,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  aiNote: string;
+  onAiNoteChange: (value: string) => void;
 };
 
 function BriefIntakeStep({
@@ -519,9 +605,104 @@ function BriefIntakeStep({
   onCheck,
   isChecking,
   checkLog,
+  form,
+  onFormChange,
+  aiNote,
+  onAiNoteChange,
 }: BriefIntakeStepProps) {
+  const goals = splitMultiValue(form.goalsInput);
+  const channels = splitMultiValue(form.channelsInput);
+  const briefAiSuggestions = [
+    "将 Brief 转写成标准模板并提示缺失项",
+    "确认预算、KPI 是否互相矛盾并给出理由",
+    "针对线下快闪活动列出必填安全信息",
+  ];
   return (
     <div className="space-y-6">
+      <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
+          <h3 className="text-sm font-semibold text-white">Brief 快速填写入口</h3>
+          <p className="mt-1 text-xs text-slate-400">
+            在这里录入关键信息，系统会实时同步到下方概览与 AI 检查清单。
+          </p>
+          <div className="mt-4 grid gap-3 text-xs text-slate-300 sm:grid-cols-2">
+            <label className="space-y-1">
+              <span className="text-slate-400">战役名称</span>
+              <input
+                className="w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-white outline-none transition focus:border-sky-400"
+                value={form.campaignName}
+                onChange={(event) => onFormChange("campaignName", event)}
+                placeholder="如：未来随行新品发布"
+              />
+            </label>
+            <label className="space-y-1">
+              <span className="text-slate-400">时间范围</span>
+              <input
+                className="w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-white outline-none transition focus:border-sky-400"
+                value={form.timeframe}
+                onChange={(event) => onFormChange("timeframe", event)}
+                placeholder="2024.08 - 2024.09"
+              />
+            </label>
+            <label className="space-y-1">
+              <span className="text-slate-400">负责人</span>
+              <input
+                className="w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-white outline-none transition focus:border-sky-400"
+                value={form.owner}
+                onChange={(event) => onFormChange("owner", event)}
+                placeholder="品牌经理 · 李然"
+              />
+            </label>
+            <label className="space-y-1">
+              <span className="text-slate-400">预算上限</span>
+              <input
+                className="w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-white outline-none transition focus:border-sky-400"
+                value={form.budget}
+                onChange={(event) => onFormChange("budget", event)}
+                placeholder="350 万"
+              />
+            </label>
+          </div>
+          <div className="mt-3 grid gap-3 text-xs text-slate-300 sm:grid-cols-2">
+            <label className="space-y-1">
+              <span className="text-slate-400">业务目标（用 / 或换行分隔）</span>
+              <textarea
+                className="min-h-[76px] w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-white outline-none transition focus:border-sky-400"
+                value={form.goalsInput}
+                onChange={(event) => onFormChange("goalsInput", event)}
+                placeholder="GMV +35% / 声量 +50%"
+              />
+            </label>
+            <label className="space-y-1">
+              <span className="text-slate-400">重点渠道（用 / 或换行分隔）</span>
+              <textarea
+                className="min-h-[76px] w-full rounded-xl border border-white/15 bg-slate-950/60 px-3 py-2 text-white outline-none transition focus:border-sky-400"
+                value={form.channelsInput}
+                onChange={(event) => onFormChange("channelsInput", event)}
+                placeholder="天猫旗舰店 / 抖音直播 / 私域社群"
+              />
+            </label>
+          </div>
+          <label className="mt-3 block text-xs text-slate-300">
+            <span className="text-slate-400">补充约束或备注</span>
+            <textarea
+              className="mt-1 min-h-[80px] w-full rounded-2xl border border-dashed border-white/20 bg-slate-950/40 px-3 py-2 text-white outline-none transition focus:border-sky-400"
+              value={form.constraintsNote}
+              onChange={(event) => onFormChange("constraintsNote", event)}
+              placeholder="示例：线下快闪需提供安全责任人、物料清单等信息"
+            />
+          </label>
+        </div>
+        <AiInteractionPanel
+          title="如何让 NOVA 协助填写 Brief"
+          description="把当前困惑写成一句话，或直接点击提示语调起 AI。NOVA 会读取左侧填入的信息给出校验意见。"
+          suggestions={briefAiSuggestions}
+          value={aiNote}
+          onChange={onAiNoteChange}
+          placeholder="示例：请帮我判断 Brief 是否可直接进入策略阶段，如不足请列出补充项"
+        />
+      </div>
+
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="space-y-3">
           <h2 className="text-lg font-semibold text-white">1. Brief 信息概览</h2>
@@ -547,10 +728,10 @@ function BriefIntakeStep({
         <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
           <h3 className="text-sm font-semibold text-white">基础信息</h3>
           <ul className="mt-3 space-y-2 text-xs text-slate-300">
-            <li>战役名称：{summary.campaignName}</li>
-            <li>时间范围：{summary.timeframe}</li>
-            <li>负责人：{summary.owner}</li>
-            <li>预算上限：{summary.budget}</li>
+            <li>战役名称：{form.campaignName || "未填写"}</li>
+            <li>时间范围：{form.timeframe || "未填写"}</li>
+            <li>负责人：{form.owner || "未填写"}</li>
+            <li>预算上限：{form.budget || "未填写"}</li>
           </ul>
         </div>
         <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
@@ -558,7 +739,7 @@ function BriefIntakeStep({
           <div className="mt-3">
             <p className="text-xs text-slate-400">业务目标</p>
             <div className="mt-2 flex flex-wrap gap-2 text-xs text-sky-100">
-              {summary.goals.map((goal) => (
+              {(goals.length ? goals : ["暂未填写"]).map((goal) => (
                 <span
                   key={goal}
                   className="rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1"
@@ -571,7 +752,7 @@ function BriefIntakeStep({
           <div className="mt-4">
             <p className="text-xs text-slate-400">重点渠道</p>
             <div className="mt-2 flex flex-wrap gap-2 text-xs text-slate-300">
-              {summary.primaryChannels.map((channel) => (
+              {(channels.length ? channels : ["暂未填写"]).map((channel) => (
                 <span
                   key={channel}
                   className="rounded-full border border-white/10 bg-white/5 px-3 py-1"
@@ -663,6 +844,8 @@ type AiDigestStepProps = {
   confirmations: ConfirmationState;
   onResolve: (id: string) => void;
   promptHistory: typeof strategyPromptHistory;
+  aiNote: string;
+  onAiNoteChange: (value: string) => void;
 };
 
 function AiDigestStep({
@@ -671,7 +854,14 @@ function AiDigestStep({
   confirmations,
   onResolve,
   promptHistory,
+  aiNote,
+  onAiNoteChange,
 }: AiDigestStepProps) {
+  const digestAiSuggestions = [
+    "总结刚才流式输出的要点，列出风险",
+    "根据 Brief 给我 3 条不同假设的可行性",
+    "继续追问：需要补充哪些数据点",
+  ];
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -802,6 +992,14 @@ function AiDigestStep({
               ))}
             </div>
           </div>
+          <AiInteractionPanel
+            title="如何继续追问 AI"
+            description="将想要 AI 细化的方向写下来，例如请它加速生成竞品或受众洞察。"
+            suggestions={digestAiSuggestions}
+            value={aiNote}
+            onChange={onAiNoteChange}
+            placeholder="示例：请把当前假设转译为可视化看板的数据结构，并列出需要人工确认的 3 个节点"
+          />
         </div>
       </div>
     </div>
@@ -814,6 +1012,9 @@ type JointCalibrationStepProps = {
   onAcceptSuggestion: (id: string) => void;
   timeline: typeof strategyCollaborationTimeline;
   versions: typeof strategyVersionHistory;
+  keyOutputs: typeof strategyKeyOutputs;
+  aiNote: string;
+  onAiNoteChange: (value: string) => void;
 };
 
 function JointCalibrationStep({
@@ -822,7 +1023,15 @@ function JointCalibrationStep({
   onAcceptSuggestion,
   timeline,
   versions,
+  keyOutputs,
+  aiNote,
+  onAiNoteChange,
 }: JointCalibrationStepProps) {
+  const jointAiSuggestions = [
+    "把内容策略做成 3 条 campaign message",
+    "生成达人协作任务清单并区分 AI/人工",
+    "查看是否有缺少 KPI 的策略段落",
+  ];
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -977,6 +1186,65 @@ function JointCalibrationStep({
               ))}
             </div>
           </div>
+          <AiInteractionPanel
+            title="与 NOVA 共创提示"
+            description="告诉 AI 你希望它补充的策略颗粒度，或直接点击提示词生成竞品、内容、达人等成果。"
+            suggestions={jointAiSuggestions}
+            value={aiNote}
+            onChange={onAiNoteChange}
+            placeholder="示例：请输出达人协同作战图的 V2 版本，突出内容分工 + 考核指标"
+          />
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-white/[0.05] p-4">
+        <div className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h3 className="text-sm font-semibold text-white">关键输出成果</h3>
+            <p className="text-xs text-slate-400">
+              竞品分析、内容策略、达人战术等核心交付将在这里集中呈现。
+            </p>
+          </div>
+          <Link href="#" className="text-[11px] text-sky-200 transition hover:text-sky-100">
+            查看示例模版
+          </Link>
+        </div>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          {keyOutputs.map((output) => (
+            <div
+              key={output.id}
+              className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-xs text-slate-300"
+            >
+              <div className="flex items-center justify-between text-[11px] text-slate-400">
+                <span>{output.owner}</span>
+                <span className={keyOutputStatusMap[output.status]?.className ?? "text-slate-400"}>
+                  {output.status}
+                </span>
+              </div>
+              <h4 className="mt-2 text-base font-semibold text-white">{output.title}</h4>
+              <p className="mt-2 leading-6 text-slate-300">{output.summary}</p>
+              <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-200">
+                {output.highlights.map((highlight) => (
+                  <span
+                    key={highlight}
+                    className="rounded-full border border-white/15 bg-white/5 px-3 py-1"
+                  >
+                    {highlight}
+                  </span>
+                ))}
+              </div>
+              <p className="mt-3 text-[11px] text-slate-500">
+                最近更新：
+                {new Date(output.lastUpdated).toLocaleTimeString("zh-CN", {
+                  hour12: false,
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -1000,6 +1268,8 @@ type ExecutionHandoffStepProps = {
   onApprovalComplete: (id: string) => void;
   onApprovalRemind: (id: string) => void;
   onExport: (label: string) => void;
+  aiNote: string;
+  onAiNoteChange: (value: string) => void;
 };
 
 const approvalStatusMeta: Record<
@@ -1033,7 +1303,14 @@ function ExecutionHandoffStep({
   onApprovalComplete,
   onApprovalRemind,
   onExport,
+  aiNote,
+  onAiNoteChange,
 }: ExecutionHandoffStepProps) {
+  const handoffAiSuggestions = [
+    "总结关键交付物并提示缺失",
+    "根据审批状态生成跟进提醒",
+    "把任务包映射到 Workflow 看板的列",
+  ];
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
@@ -1215,8 +1492,18 @@ function ExecutionHandoffStep({
             </p>
           </div>
         </div>
+        <div className="lg:col-span-2">
+          <AiInteractionPanel
+            title="交接阶段该如何问 AI"
+            description="让 NOVA 帮你梳理导出物、审批或任务同步的优先级，点击提示即可一键生成指令。"
+            suggestions={handoffAiSuggestions}
+            value={aiNote}
+            onChange={onAiNoteChange}
+            placeholder="示例：请根据当前审批状态生成提醒话术，并把缺失的交付物列出来"
+          />
+        </div>
         {tasksSynced && (
-          <div className="rounded-2xl border border-sky-400/30 bg-sky-400/10 p-4 text-xs text-sky-100">
+          <div className="rounded-2xl border border-sky-400/30 bg-sky-400/10 p-4 text-xs text-sky-100 lg:col-span-2">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-semibold text-white">已推送至 Workflow 的任务</p>
@@ -1266,6 +1553,62 @@ function ExecutionHandoffStep({
           <AlertCircle className="h-4 w-4 text-amber-300" />
           提醒：完成审批和 Workflow 同步后，请在 24 小时内更新项目复盘看板。
         </div>
+      </div>
+    </div>
+  );
+}
+
+type AiInteractionPanelProps = {
+  title: string;
+  description: string;
+  suggestions: readonly string[];
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+};
+
+function AiInteractionPanel({
+  title,
+  description,
+  suggestions,
+  value,
+  onChange,
+  placeholder,
+}: AiInteractionPanelProps) {
+  const handleSuggestionClick = (tip: string) => {
+    onChange(value ? `${value}\n${tip}` : tip);
+  };
+  return (
+    <div className="rounded-2xl border border-sky-400/20 bg-sky-400/5 p-4">
+      <div className="flex items-center gap-2">
+        <Sparkles className="h-4 w-4 text-sky-200" />
+        <div>
+          <h3 className="text-sm font-semibold text-white">{title}</h3>
+          <p className="text-xs text-slate-200/80">{description}</p>
+        </div>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-200">
+        {suggestions.map((tip) => (
+          <button
+            key={tip}
+            type="button"
+            onClick={() => handleSuggestionClick(tip)}
+            className="rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1 transition hover:border-sky-300/60 hover:text-white"
+          >
+            {tip}
+          </button>
+        ))}
+      </div>
+      <div className="mt-3 text-xs text-slate-300">
+        <textarea
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          className="h-28 w-full rounded-2xl border border-white/15 bg-slate-950/40 px-3 py-2 text-white outline-none transition focus:border-sky-400"
+        />
+        <p className="mt-1 text-[11px] text-slate-400">
+          NOVA 会记住这段指令，随时可复制到对话或触发下一步生成。
+        </p>
       </div>
     </div>
   );

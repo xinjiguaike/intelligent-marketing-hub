@@ -470,3 +470,36 @@ export type StrategyBriefChecklistItem = (typeof strategyBriefChecklist)[number]
 
 // Backward compatibility alias if legacy imports remain.
 export const strategyTree = strategyKnowledgeTree;
+
+export const strategyKeyOutputs = [
+  {
+    id: "output-competition",
+    title: "竞品分析报告",
+    owner: "洞察 AI",
+    status: "已生成",
+    lastUpdated: "2024-07-11T22:10:00+08:00",
+    summary:
+      "横向对比 4 个主要竞品的卖点、渠道策略与达人组合，标记新品可差异化切入的“沉浸体验”诉求。",
+    highlights: ["差异化主张 · 沉浸体验", "渠道空档 · 抖音剧情直播", "高潜达人池 · 科技体验官"],
+  },
+  {
+    id: "output-content",
+    title: "内容触点策略版块",
+    owner: "创意 AI",
+    status: "人机共创中",
+    lastUpdated: "2024-07-12T09:15:00+08:00",
+    summary:
+      "围绕“沉浸 + 效率”双线叙事，拆解剧情短片、线下快闪与会员社群的内容主题、节奏与 KPI。",
+    highlights: ["剧情短片 · 3 支脚本", "线下快闪 · 5 个互动点", "会员社群 · 分层触达"],
+  },
+  {
+    id: "output-kol",
+    title: "达人协同作战图",
+    owner: "运营 AI",
+    status: "待复核",
+    lastUpdated: "2024-07-12T10:05:00+08:00",
+    summary:
+      "将科技测评达人、生活方式 KOC 与品牌主理人按阶段分组，明确内容形式、投放窗口与考核指标。",
+    highlights: ["科技达人 · 功能拆解", "生活方式 KOC · 场景植入", "主理人 · 发布会直播"],
+  },
+] as const;
