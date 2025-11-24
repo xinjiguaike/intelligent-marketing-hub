@@ -7,6 +7,12 @@ type CircularProgressProps = {
   className?: string;
 };
 
+type ProgressProps = {
+  value: number;
+  className?: string;
+  indicatorClassName?: string;
+};
+
 export function CircularProgress({
   value,
   size = 72,
@@ -62,5 +68,19 @@ export function CircularProgress({
         {Math.round(value)}%
       </text>
     </svg>
+  );
+}
+
+export function Progress({ value, className, indicatorClassName }: ProgressProps) {
+  return (
+    <div className={cn("relative h-2 w-full overflow-hidden rounded-full bg-slate-800", className)}>
+      <div
+        className={cn(
+          "h-full rounded-full bg-gradient-to-r from-sky-400 via-cyan-300 to-blue-500 transition-all",
+          indicatorClassName
+        )}
+        style={{ width: `${Math.min(100, Math.max(0, value))}%` }}
+      />
+    </div>
   );
 }

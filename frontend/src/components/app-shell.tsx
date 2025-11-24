@@ -15,12 +15,15 @@ import {
   Radar,
   ServerCog,
   SigmaSquare,
-  UserRound,
   Workflow,
   Boxes,
+  Users,
+  Network,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { personalBoards } from "@/data/mock/orchestration";
+import { orgClockSnapshot } from "@/data/mock/collaboration";
+import { goals } from "@/data/mock/dashboard";
 
 type AppShellProps = {
   children: ReactNode;
@@ -28,22 +31,17 @@ type AppShellProps = {
 
 const navItems = [
   {
-    label: "个人工作台",
+    label: "协同空间",
     href: "/",
-    icon: UserRound,
-  },
-  {
-    label: "总览驾驶舱",
-    href: "/overview",
     icon: LayoutDashboard,
   },
   {
-    label: "智能任务编排",
-    href: "/workflow",
-    icon: Workflow,
+    label: "组织大脑",
+    href: "/ai-control",
+    icon: BrainCircuit,
   },
   {
-    label: "营销策划空间",
+    label: "策略域",
     href: "/strategy",
     icon: Presentation,
   },
@@ -67,28 +65,38 @@ const navItems = [
     href: "/assets",
     icon: Boxes,
   },
+  {
+    label: "外部盟军",
+    href: "/allies",
+    icon: Network,
+  },
+  {
+    label: "任务执行地图",
+    href: "/workflow",
+    icon: Workflow,
+  },
 ];
 
 const secondaryItems = [
-  {
-    label: "AI 智能体中控",
-    href: "/ai-control",
-    icon: BrainCircuit,
-  },
   {
     label: "数字员工管理",
     href: "/agents",
     icon: Bot,
   },
   {
-    label: "系统偏好设置",
-    href: "/settings",
-    icon: ServerCog,
-  },
-  {
     label: "知识库",
     href: "/knowledge",
     icon: SigmaSquare,
+  },
+  {
+    label: "个人工作台",
+    href: "/personal",
+    icon: Users,
+  },
+  {
+    label: "系统偏好设置",
+    href: "/settings",
+    icon: ServerCog,
   },
 ];
 
@@ -251,6 +259,10 @@ function TopBar() {
                 ⌘K
               </span>
             </div>
+            <div className="hidden items-center gap-3 lg:flex">
+              <OrgClockBadge />
+              <NextMilestoneBadge />
+            </div>
           </div>
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -307,5 +319,35 @@ function TopBar() {
         </div>
       </div>
     </header>
+  );
+}
+
+function OrgClockBadge() {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-xs text-slate-300">
+      <div className="flex flex-col">
+        <span className="text-[10px] uppercase tracking-[0.35em] text-slate-500">
+          组织时钟
+        </span>
+        <span className="font-semibold text-white">{orgClockSnapshot.sprint}</span>
+      </div>
+      <div className="h-10 w-px bg-white/10" />
+      <div>
+        <p className="text-[10px] text-slate-500">下一次 {orgClockSnapshot.nextReview.label}</p>
+        <p className="text-sm text-sky-200">{orgClockSnapshot.nextReview.time}</p>
+      </div>
+    </div>
+  );
+}
+
+function NextMilestoneBadge() {
+  const upcomingGoal = goals[0];
+  if (!upcomingGoal) return null;
+  return (
+    <div className="rounded-2xl border border-sky-400/30 bg-sky-400/10 px-4 py-2 text-xs text-slate-200">
+      <p className="text-[10px] uppercase tracking-[0.35em] text-sky-200">关键战役</p>
+      <p className="mt-1 text-sm font-semibold text-white">{upcomingGoal.name}</p>
+      <p className="text-[11px] text-slate-200">完成度 {(upcomingGoal.progress * 100).toFixed(0)}%</p>
+    </div>
   );
 }

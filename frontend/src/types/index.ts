@@ -339,6 +339,94 @@ export type WorkflowColumn = {
   tasks: WorkflowTask[];
 };
 
+export type CapabilityNeed = {
+  id: string;
+  label: string;
+  capability: string;
+  required: number;
+  available: number;
+  owner: string;
+  status: "stable" | "watch" | "risk";
+  note?: string;
+};
+
+export type BattleCampaignStatus = {
+  id: string;
+  name: string;
+  objective: string;
+  stage: string;
+  commander: string;
+  priority: "low" | "medium" | "high" | "critical";
+  progress: number;
+  health: "good" | "watch" | "risk";
+  due: string;
+  capabilityNeeds: CapabilityNeed[];
+};
+
+export type BattleGroupStatus = {
+  id: string;
+  label: string;
+  commander: string;
+  focus: string;
+  aiMembers: string[];
+  humanMembers: string[];
+  allies?: string[];
+  health: number;
+  status: "stable" | "watch" | "alert";
+};
+
+export type OrgClockEvent = {
+  id: string;
+  label: string;
+  time: string;
+  owner: string;
+  type: "milestone" | "risk" | "handover" | "inspection";
+  impact: "positive" | "warning" | "critical";
+};
+
+export type OrgClockSnapshot = {
+  sprint: string;
+  focus: string;
+  nextReview: { label: string; time: string };
+  events: OrgClockEvent[];
+};
+
+export type SandboxDelivery = {
+  id: string;
+  title: string;
+  owner: string;
+  linkedModule: string;
+  status: "synced" | "pending" | "blocked";
+  action: string;
+};
+
+export type ExecutionPulse = {
+  total: number;
+  executing: number;
+  handover: number;
+  completed: number;
+  alerts: number;
+  capabilityGap: number;
+};
+
+export type TaskChainPulse = {
+  id: string;
+  label: string;
+  tasks: string[];
+  health: "good" | "watch" | "risk";
+};
+
+export type AlliedCreator = {
+  id: string;
+  name: string;
+  role: string;
+  stage: "接触" | "谈判" | "共创" | "交付";
+  fitScore: number;
+  linkedCampaign: string;
+  status: "active" | "pending" | "at-risk";
+  nextStep: string;
+};
+
 export type CampaignParticipant = {
   id: string;
   name: string;
