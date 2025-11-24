@@ -1575,8 +1575,18 @@ function AiInteractionPanel({
   onChange,
   placeholder,
 }: AiInteractionPanelProps) {
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const [highlight, setHighlight] = useState(false);
   const handleSuggestionClick = (tip: string) => {
     onChange(value ? `${value}\n${tip}` : tip);
+    setFeedback("已将提示语填入下方输入框，可继续补充后发送给 NOVA。");
+    setHighlight(true);
+    setTimeout(() => {
+      setHighlight(false);
+    }, 1200);
+    setTimeout(() => {
+      setFeedback(null);
+    }, 3200);
   };
   return (
     <div className="rounded-2xl border border-sky-400/20 bg-sky-400/5 p-4">
@@ -1604,11 +1614,20 @@ function AiInteractionPanel({
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
-          className="h-28 w-full rounded-2xl border border-white/15 bg-slate-950/40 px-3 py-2 text-white outline-none transition focus:border-sky-400"
+          className={cn(
+            "h-28 w-full rounded-2xl border border-white/15 bg-slate-950/40 px-3 py-2 text-white outline-none transition focus:border-sky-400",
+            highlight && "border-sky-400/70 shadow-[0_0_0_2px_rgba(56,189,248,0.3)]"
+          )}
         />
         <p className="mt-1 text-[11px] text-slate-400">
           NOVA 会记住这段指令，随时可复制到对话或触发下一步生成。
         </p>
+        {feedback && (
+          <div className="mt-1 inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1 text-[11px] text-sky-100">
+            <Sparkles className="h-3 w-3" />
+            {feedback}
+          </div>
+        )}
       </div>
     </div>
   );
